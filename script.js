@@ -12,7 +12,7 @@ const baseImage = document.getElementById('baseImage');
 const resetButton = document.getElementById('resetButton');
 
 let isDrawing = false;
-const BRUSH_RADIUS = 20;
+const BRUSH_RADIUS = 5;
 let currentImageSet = null; // 現在選択されている画像セット
 let originalDisplaySize = null; // 初回計算時のサイズを保存
 
