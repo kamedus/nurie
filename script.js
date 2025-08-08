@@ -62,6 +62,15 @@ function selectImage(imageSet) {
     currentImageTitle.textContent = imageSet.title;
     baseImage.src = imageSet.colorImage;
     
+    // サイズ情報を完全にリセット
+    originalDisplaySize = null;
+    
+    // キャンバスのスタイルをリセット
+    drawingCanvas.style.width = '';
+    drawingCanvas.style.height = '';
+    baseImage.style.width = '';
+    baseImage.style.height = '';
+    
     // 画面切り替え
     selectionScreen.classList.add('hidden');
     drawingScreen.classList.remove('hidden');
@@ -105,8 +114,10 @@ function initDrawingCanvas(isReset = false) {
                 displayHeight = displayWidth / aspectRatio;
             }
             
-            // 初回計算サイズを保存
-            originalDisplaySize = { width: displayWidth, height: displayHeight };
+            // 初回計算サイズを保存（isResetがfalseの場合のみ）
+            if (!isReset) {
+                originalDisplaySize = { width: displayWidth, height: displayHeight };
+            }
         }
         
         // キャンバスサイズは元画像サイズに設定（高解像度維持）
@@ -134,6 +145,12 @@ function goBackToSelection() {
     
     // キャンバスをクリア
     ctx.clearRect(0, 0, drawingCanvas.width, drawingCanvas.height);
+    
+    // キャンバスのスタイルもリセット
+    drawingCanvas.style.width = '';
+    drawingCanvas.style.height = '';
+    baseImage.style.width = '';
+    baseImage.style.height = '';
 }
 
 // マウスイベント
