@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>塗り絵アプリ</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- 画像選択画面 -->
+    <div id="selectionScreen" class="screen">
+        <div class="selection-container">
+            <h1>塗り絵を選んでね！</h1>
+            <div class="image-grid" id="imageGrid">
+                <!-- 画像選択カードがここに動的に追加される -->
+            </div>
+        </div>
+    </div>
+
+    <!-- 塗り絵画面 -->
+    <div id="drawingScreen" class="screen hidden">
+        <div class="container">
+            <div class="header">
+                <button id="backButton" class="back-button">← 戻る</button>
+                <h2 id="currentImageTitle">塗り絵</h2>
+            </div>
+            <div class="canvas-container">
+                <canvas id="drawingCanvas"></canvas>
+                <img id="baseImage" src="" alt="完成画像" class="base-image">
+            </div>
+            <div class="controls">
+                <button id="resetButton">最初からやり直す</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
