@@ -35,6 +35,20 @@ const imagesets = [
         title: 'ハロウィン',
         colorImage: 'images/color3.png',
         monoImage: 'images/mono3.png'
+    },
+    {
+        id: 4,
+        title: 'おさるさん',
+        colorImage: 'images/color4.png',
+        monoImage: 'images/mono4.png',
+        offsetY: 20  // 背景画像を下に20px移動
+    },
+    {
+        id: 5,
+        title: 'イルカさん',
+        colorImage: 'images/color5.png',
+        monoImage: 'images/mono5.jpg',
+        offsetX: 10  // 背景画像を右に10px移動
     }
 ];
 
@@ -85,6 +99,10 @@ function initDrawingCanvas(isReset = false) {
     
     const monoImage = new Image();
     monoImage.src = currentImageSet.monoImage;
+    monoImage.onerror = () => {
+        console.error('Failed to load mono image:', currentImageSet.monoImage);
+        alert(`画像の読み込みに失敗しました: ${currentImageSet.title}`);
+    };
     monoImage.onload = () => {
         // 画像の自然なサイズ
         const naturalWidth = monoImage.naturalWidth;
@@ -130,9 +148,24 @@ function initDrawingCanvas(isReset = false) {
         
         baseImage.style.width = `${displayWidth}px`;
         baseImage.style.height = `${displayHeight}px`;
+        
+        // 画像ごとの位置調整（offsetがある場合）
+        let transform = '';
+        if (currentImageSet.offsetX) {
+            transform += `translateX(${currentImageSet.offsetX}px) `;
+        }
+        if (currentImageSet.offsetY) {
+            transform += `translateY(${currentImageSet.offsetY}px)`;
+        }
+        baseImage.style.transform = transform.trim();
 
         ctx.drawImage(monoImage, 0, 0);
         ctx.globalCompositeOperation = 'destination-out';
+        
+        // デバッグ情報（コンソールに出力）
+        console.log(`Initialized canvas for: ${currentImageSet.title}`);
+        console.log(`Canvas size: ${naturalWidth}x${naturalHeight}`);
+        console.log(`Display size: ${displayWidth}x${displayHeight}`);
     };
 }
 
@@ -213,6 +246,11 @@ function draw(e) {
     ctx.stroke();
     ctx.beginPath();
     ctx.moveTo(x, y);
+    
+    // デバッグ: 描画座標をコンソールに出力（イルカさんの場合のみ）
+    if (currentImageSet && currentImageSet.title === 'イルカさん') {
+        console.log(`Drawing at: ${x.toFixed(1)}, ${y.toFixed(1)} with brush size: ${adjustedBrushRadius.toFixed(1)}`);
+    }
 }
 
 // イベントリスナーの設定
